@@ -1,0 +1,7 @@
+bin
+obj
+build
+a.out
+*.cbp
+*.depend
+.vscode
