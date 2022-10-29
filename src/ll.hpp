@@ -55,7 +55,7 @@ public:
 
     virtual void push(T elem) {top = new node<T>(elem, top);};
     virtual int pop(T* target) = 0;
-    virtual node<T>* GetFront() {return top;}
+    virtual node<T>* getFront() {return top;}
     virtual bool isEmpty() const {return top == nullptr;}
 
     virtual std::size_t size() const {

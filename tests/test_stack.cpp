@@ -18,13 +18,14 @@ int main() {
 
     s3.push(4);
 
-
     int a;
     std::stringstream out;
 
     while (!s1.pop(&a)) out << a;
     out << s2 << s3;
+    out << s3.getFront()->data;
+    out << s3.size();
 
     std::cout << out.str();
-    return (out.str() != "321Stack[2, 1]Stack[4, 3, 2, 1]");
+    return (out.str() != "321Stack[2, 1]Stack[4, 3, 2, 1]44");
 }

@@ -23,6 +23,8 @@ int main() {
 
     while (!q1.pop(&a)) out << a;
     out << q2 << q3;
+    out << q3.getFront()->data;
+    out << q3.size();
 
-    return (out.str() != "123Queue[2, 1]Queue[4, 3, 2, 1]");
+    return (out.str() != "123Queue[2, 1]Queue[4, 3, 2, 1]44");
 }
