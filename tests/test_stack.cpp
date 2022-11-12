@@ -1,12 +1,22 @@
 #include <string>  
 #include <iostream> 
 #include <sstream> 
+#include <cassert>
 
 #include "stack.hpp"
 
+/**
+ * if ("cout << object" prints expected string)
+ */
+template <class T>
+bool check_output(T object, std::string expected) {
+    std::stringstream out;
+    out << object;
+    return out.str() == expected;
+}
+
 int main() {
     Stack<int> s1 = Stack<int>();
-
     s1.push(1);
     s1.push(2);
 
@@ -14,18 +24,23 @@ int main() {
 
     s1.push(3);
 
-    Stack<int> s3 = s1;
-
+    Stack<int> s3;
+    s3 = s1;
     s3.push(4);
 
     int a;
-    std::stringstream out;
+    s1.pop(&a);
+    assert(a == 3);
+    s1.pop(&a);
+    assert(a == 2);
+    s1.pop(&a);
+    assert(a == 1);
+    assert(s1.pop(&a) == 1);
 
-    while (!s1.pop(&a)) out << a;
-    out << s2 << s3;
-    out << s3.getFront()->data;
-    out << s3.size();
+    assert(check_output(s2, "Stack[2, 1]"));
+    assert(check_output(s3, "Stack[4, 3, 2, 1]"));
+    assert(check_output(s3.getFront()->data, "4"));
+    assert(check_output(s3.size(), "4"));
 
-    std::cout << out.str();
-    return (out.str() != "321Stack[2, 1]Stack[4, 3, 2, 1]44");
+    return 0;
 }

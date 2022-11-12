@@ -1,12 +1,22 @@
 #include <string>  
 #include <iostream> 
 #include <sstream> 
+#include <cassert>
 
 #include "queue.hpp"
 
+/**
+ * if ("cout << object" prints expected string)
+ */
+template <class T>
+bool check_output(T object, std::string expected) {
+    std::stringstream out;
+    out << object;
+    return out.str() == expected;
+}
+
 int main() {
     Queue<int> q1 = Queue<int>();
-
     q1.push(1);
     q1.push(2);
 
@@ -14,17 +24,23 @@ int main() {
 
     q1.push(3);
 
-    Queue<int> q3 = q1;
-
+    Queue<int> q3;
+    q3 = q1;
     q3.push(4);
 
     int a;
-    std::stringstream out;
+    q1.pop(&a);
+    assert(a == 1);
+    q1.pop(&a);
+    assert(a == 2);
+    q1.pop(&a);
+    assert(a == 3);
+    assert(q1.pop(&a) == 1);
 
-    while (!q1.pop(&a)) out << a;
-    out << q2 << q3;
-    out << q3.getFront()->data;
-    out << q3.size();
+    assert(check_output(q2, "Queue[1, 2]"));
+    assert(check_output(q3, "Queue[1, 2, 3, 4]"));
+    assert(check_output(q3.getFront()->data, "1"));
+    assert(check_output(q3.size(), "4"));
 
-    return (out.str() != "123Queue[2, 1]Queue[4, 3, 2, 1]44");
+    return 0;
 }
