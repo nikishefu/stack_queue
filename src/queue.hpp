@@ -6,26 +6,52 @@
 
 template <class T> class Queue : public LinkedList<T> {
 public:
-    int pop(T* target) {
-        if (this->isEmpty()) return 1;
-        if (this->top->next == nullptr) {
-            *target = this->top->data;
-            delete this->top;
+    Queue(): LinkedList<T>() {}
+    Queue(const Queue& q) {
+        if (q.isEmpty()) {
             this->top = nullptr;
-            return 0;
+            return;
         }
+        this->top = new node<T>(q.top->data);
 
-        node<T>* t = this->top;
-        while (t->next->next != nullptr) t = t->next; 
+        node<T>* target = this->top;
+        node<T>* source = q.top->next;
+        while (source != nullptr) {
+            target->next = new node<T>(source->data);
 
-        *target = t->next->data;
-        delete t->next;
-        t->next = nullptr;
-
+            target = target->next;
+            source = source->next;
+        }
+        tail = target;
+    }
+    Queue(const Queue&& s): LinkedList<T>(s), tail(s.tail) {}
+    Queue& operator=(const Queue& q) {
+        delete this->top;
+        Queue<T>* t = new Queue(q);
+        this->top = t->top;
+        this->tail = t->tail;
+        return *this;
+    };
+    
+    int pop(T* target) {
+        if (LinkedList<T>::pop(target)) return 1;
+        if (this->top == nullptr) tail = nullptr;
         return 0;
     }
+
+    void push(T elem) override {
+        if (this->isEmpty()) {
+            this->top = new node<T>(elem);
+            tail = this->top;
+        } else {
+            tail->next = new node<T>(elem);
+            tail = tail->next;
+        }
+    }
 protected:
-    virtual void print(std::ostream &os) const {
+    node<T>* tail;
+
+    void print(std::ostream &os) const override{
         os << "Queue[";
 
         node<T>* t = this->top;

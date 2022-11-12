@@ -5,7 +5,7 @@
 
 template <class T> class LinkedList {
 public:
-    LinkedList(): top(nullptr) {};
+    LinkedList(): top(nullptr) {}
 
     LinkedList(const LinkedList& s) {
         if (s.isEmpty()) {
@@ -53,8 +53,19 @@ public:
         return *this;
     }
 
-    virtual void push(T elem) {top = new node<T>(elem, top);};
-    virtual int pop(T* target) = 0;
+    virtual void push(T elem) = 0;
+    virtual int pop(T* target) {
+        if (isEmpty()) return 1;
+
+        *target = top->data;
+        node<T>* t = top;
+        top = top->next;
+        
+        t->next = nullptr;
+        delete t;
+
+        return 0;
+    }
     virtual node<T>* getFront() {return top;}
     virtual bool isEmpty() const {return top == nullptr;}
 
