@@ -25,7 +25,7 @@ public:
     }
 
     LinkedList(const LinkedList&& s): top(s.top) {s.top = nullptr;}
-    ~LinkedList() {delete top;}
+    virtual ~LinkedList() {delete top;}
 
     LinkedList& operator=(const LinkedList& s) {
         delete top;

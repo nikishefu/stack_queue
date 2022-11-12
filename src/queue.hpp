@@ -30,6 +30,10 @@ public:
         Queue<T>* t = new Queue(q);
         this->top = t->top;
         this->tail = t->tail;
+
+        t->top = nullptr;
+        delete t;
+
         return *this;
     };
     
