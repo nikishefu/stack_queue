@@ -28,14 +28,13 @@ int main() {
     q3 = q1;
     q3.push(4);
 
-    int a;
-    q1.pop(&a);
-    assert(a == 1);
-    q1.pop(&a);
-    assert(a == 2);
-    q1.pop(&a);
-    assert(a == 3);
-    assert(q1.pop(&a) == 1);
+    assert(q1.pop() == 1);
+    assert(q1.pop() == 2);
+    assert(q1.pop() == 3);
+
+    bool empty = false;
+    try {q1.pop();} catch (const std::out_of_range&) {empty = true;}
+    assert(empty);
 
     assert(check_output(q2, "Queue[1, 2]"));
     assert(check_output(q3, "Queue[1, 2, 3, 4]"));

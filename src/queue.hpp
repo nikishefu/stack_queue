@@ -37,10 +37,10 @@ public:
         return *this;
     };
     
-    int pop(T* target) {
-        if (LinkedList<T>::pop(target)) return 1;
+    T pop() override {
+        T data = LinkedList<T>::pop();
         if (this->top == nullptr) tail = nullptr;
-        return 0;
+        return data;
     }
 
     void push(T elem) override {

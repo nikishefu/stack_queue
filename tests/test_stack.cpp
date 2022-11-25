@@ -28,14 +28,13 @@ int main() {
     s3 = s1;
     s3.push(4);
 
-    int a;
-    s1.pop(&a);
-    assert(a == 3);
-    s1.pop(&a);
-    assert(a == 2);
-    s1.pop(&a);
-    assert(a == 1);
-    assert(s1.pop(&a) == 1);
+    assert(s1.pop() == 3);
+    assert(s1.pop() == 2);
+    assert(s1.pop() == 1);
+
+    bool empty = false;
+    try {s1.pop();} catch (const std::out_of_range&) {empty = true;}
+    assert(empty);
 
     assert(check_output(s2, "Stack[2, 1]"));
     assert(check_output(s3, "Stack[4, 3, 2, 1]"));

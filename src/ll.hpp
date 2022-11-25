@@ -1,6 +1,7 @@
 #ifndef LL_HPP_INCLUDED
 #define LL_HPP_INCLUDED
 
+#include <stdexcept>
 #include "node.hpp"
 
 template <class T> class LinkedList {
@@ -54,17 +55,17 @@ public:
     }
 
     virtual void push(T elem) = 0;
-    virtual int pop(T* target) {
-        if (isEmpty()) return 1;
+    virtual T pop() {
+        if (isEmpty()) throw std::out_of_range("list is empty");
 
-        *target = top->data;
+        T data = top->data;
         node<T>* t = top;
         top = top->next;
         
         t->next = nullptr;
         delete t;
 
-        return 0;
+        return data;
     }
     virtual node<T>* getFront() {return top;}
     virtual bool isEmpty() const {return top == nullptr;}
